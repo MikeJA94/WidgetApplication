@@ -1,0 +1,28 @@
+
+
+.headlines
+{
+
+  ul {
+    list-style-type: none;
+    height: 20rem;
+    overflow: auto;
+    overflow-x: hidden;
+    .title {
+      color: lightgreen;
+      font-size: larger;
+      display: block;
+    }
+    li {
+     img {
+      display: inline-block;
+     }
+     span {
+      float: left;
+      color: lightgray;
+     }
+     border-bottom: .25rem solid gray;
+
+    }
+  }
+}

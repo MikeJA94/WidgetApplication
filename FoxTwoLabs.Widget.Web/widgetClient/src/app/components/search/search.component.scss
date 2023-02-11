@@ -1,0 +1,39 @@
+
+
+.search
+{
+
+  ul {
+    list-style-type: none;
+    height: 8rem;
+    min-height: 8rem;
+    min-width: 35%;
+    width: 35%;
+    border: .15rem solid gray;
+    overflow: auto;
+    overflow-x: hidden;
+    padding: .5rem;
+
+    .title {
+      color: lightgreen;
+      display: block;
+      text-align: center;
+    }
+    li {
+      margin-bottom: .5rem;
+
+
+      .size {
+        float: right;
+      }
+    }
+  }
+
+  .files {
+    float: left;
+  }
+
+  .apps {
+    float: right;
+  }
+}

@@ -1,0 +1,19 @@
+<div class="headlines">
+
+     <h4>HEADLINES</h4>
+
+     <ul>
+      <li *ngFor = "let hl of (this.headlines$ | async)" [title] = "hl.content" >
+
+        <a class = 'title' [href] = "hl.link" target="_blank">{{hl.title}} </a>
+        <span><small> Published: {{hl.datePublished | date: 'dd/MM/yyyy'}}</small></span>
+        <img [src] = " hl.image" />
+
+        <div> {{hl.summary}}</div>
+      </li>
+
+    </ul>
+</div>
+
+
+

@@ -1,0 +1,17 @@
+
+
+.weather
+{
+  background-color:  #333333;
+
+  .summary {
+     .label{
+      color: cyan;
+     }
+     .temp {
+      float: right;
+     }
+
+   margin-bottom: 1rem;
+    }
+}
