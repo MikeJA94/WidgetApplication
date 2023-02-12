@@ -3,11 +3,13 @@ using FoxTwoLabs.Widget.Application.Models;
 using FoxTwoLabs.Widget.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using static Azure.Core.HttpHeader;
@@ -50,23 +52,29 @@ namespace FoxTwoLabs.Widget.Application.Workflows.Queries
 
             // mock/seed files and apps data
             // Real life we could do a directory info search using System.File namespace.
-
+            string[] extTypes = { ".pdf", ".docx", ".txt", ".png" };
+            
             for (var cnt = 0; cnt < 25; cnt++) {
                 var size = random.Next(10, 250); // randomize the size of files
                 var typeVal = random.Next(0,100); // randomize the type of resourse
+                var extVal = random.Next(0, 3); // randomize the type of file
                 var isApp = typeVal < 50;  // just to get a spread
+                var ext = extTypes[extVal];
+
+
                 var item = new LocalResourceModel
                 {
-                    Name =  (isApp) ? $"Application {cnt}": $"File {cnt}",
+                    Name =  (isApp) ? $"Application {cnt}": $"File {cnt}{ext}",
                     Size = $"{size}kb",
-                    Type = (isApp)? RESOURCE_TYPE.App : RESOURCE_TYPE.File
-                };
+                    Type = (isApp)? RESOURCE_TYPE.App : RESOURCE_TYPE.File,
+                    
+            };
 
                 News.Add(item);
             }
 
             // now apply the search criteria based upon name of resource
-            News = News.FindAll(x => x.Name.ToLower().Contains(request.searchKey.ToLower()));
+            News = News.FindAll(x => (x.Name.ToLower().Contains(request.searchKey.ToLower())) || (request.searchKey == "*"));
             return News;
         }
         
