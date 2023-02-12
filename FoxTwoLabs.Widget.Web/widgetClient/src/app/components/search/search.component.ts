@@ -13,7 +13,6 @@ import { WidgetService } from 'src/app/api/src/services/widget.service';
 })
 export class SearchComponent implements OnInit, AfterViewInit {
 
-  public searchResults: LocalResourceModel[] = [];
   public searchResultsFile: LocalResourceModel[] = [];
   public searchResultsApp: LocalResourceModel[] = [];
   public searchKey: string = '';
@@ -51,9 +50,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
         sub.unsubscribe();
       }
 
-      this.searchResults = results;
-      this.searchResultsFile = this.searchResults.filter(r => r.type === 0);
-      this.searchResultsApp = this.searchResults.filter(r => r.type === 1);
+      this.searchResultsFile = results.filter(r => r.type === 0);
+      this.searchResultsApp = results.filter(r => r.type === 1);
 
     });
 
