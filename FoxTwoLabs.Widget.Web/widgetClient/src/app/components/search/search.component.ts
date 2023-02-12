@@ -1,11 +1,9 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { fromEvent } from 'rxjs/internal/observable/fromEvent';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
 import { map } from 'rxjs/internal/operators/map';
 import { LocalResourceModel } from 'src/app/api/src/models';
-import { HeadlineModel } from 'src/app/api/src/models/headline-model';
 import { WidgetService } from 'src/app/api/src/services/widget.service';
 
 @Component({
@@ -29,8 +27,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    //    }
-    //}
+
   }
 
   ngAfterViewInit(): void {
@@ -62,7 +59,5 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   }
 
-  onSearchChange() {
 
-  }
 }

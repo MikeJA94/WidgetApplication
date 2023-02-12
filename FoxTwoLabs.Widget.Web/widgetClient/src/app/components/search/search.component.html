@@ -1,27 +1,25 @@
 <div class="search">
-     <h4>LOCAL SEARCH</h4>
-   <div>
-    <span>Search Term: </span> <input type="text" class="search" placeholder="Search" [(ngModel)]="searchKey"  (onChange)="onSearchChange()" #searchInput>
-   </div>
+  <h4>LOCAL SEARCH</h4>
+  <div>
+    <span>Search Term: </span> <input type="text" class="search" placeholder="Search" [(ngModel)]="searchKey"
+       #searchInput>
+  </div>
 
-     <ul class = "files">
-       <span class = 'title'>Files</span>
-      <li *ngFor = "let item of (this.searchResultsFile)">
-        <span> {{item.name}}</span>
-        <span class = 'size' *ngIf = "item.size !== null"> ({{item.size}})</span>
+  <ul class="files">
+    <span class='title'>Files</span>
+    <li *ngFor="let item of (this.searchResultsFile)">
+      <span> {{item.name}}</span>
+      <span class='size' *ngIf="item.size !== null"> ({{item.size}})</span>
 
-      </li>
-    </ul>
+    </li>
+  </ul>
 
-    <ul class = "apps">
-      <span class = 'title'>Applications</span>
-      <li *ngFor = "let item of (this.searchResultsApp)">
-        <span> {{item.name}}</span>
+  <ul class="apps">
+    <span class='title'>Applications</span>
+    <li *ngFor="let item of (this.searchResultsApp)">
+      <span> {{item.name}}</span>
 
-      </li>
-    </ul>
+    </li>
+  </ul>
 
 </div>
-
-
-

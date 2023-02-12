@@ -1,7 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { RouteReuseStrategy } from '@angular/router';
-import { Observable } from 'rxjs/internal/Observable';
-//import { WeatherModelRequest } from 'src/app/api/src/models';
+import { Component, OnInit } from '@angular/core';
 import { WeatherModel } from 'src/app/api/src/models/weather-model';
 import { WidgetService } from 'src/app/api/src/services/widget.service';
 
