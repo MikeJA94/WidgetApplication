@@ -51,14 +51,14 @@ namespace FoxTwoLabs.Widget.Application.Workflows.Queries
             }
 
             // mock/seed files and apps data
-            // Real life we could do a directory info search using System.File namespace.
+            // Real life we could do a directory info search using System.IO namespace.
             string[] extTypes = { ".pdf", ".docx", ".txt", ".png" };
             
             for (var cnt = 0; cnt < 25; cnt++) {
                 var size = random.Next(10, 250); // randomize the size of files
                 var typeVal = random.Next(0,100); // randomize the type of resourse
                 var extVal = random.Next(0, 3); // randomize the type of file
-                var isApp = typeVal < 50;  // just to get a spread
+                var isApp = typeVal < 50;  // just to get a distribution
                 var ext = extTypes[extVal];
 
 
@@ -67,13 +67,12 @@ namespace FoxTwoLabs.Widget.Application.Workflows.Queries
                     Name =  (isApp) ? $"Application {cnt}": $"File {cnt}{ext}",
                     Size = $"{size}kb",
                     Type = (isApp)? RESOURCE_TYPE.App : RESOURCE_TYPE.File,
-                    
             };
 
                 News.Add(item);
             }
 
-            // now apply the search criteria based upon name of resource
+            // now apply a basic search criteria based upon name of resource
             News = News.FindAll(x => (x.Name.ToLower().Contains(request.searchKey.ToLower())) || (request.searchKey == "*"));
             return News;
         }

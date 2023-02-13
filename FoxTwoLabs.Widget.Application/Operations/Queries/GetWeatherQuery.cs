@@ -1,19 +1,12 @@
-﻿using AutoMapper;
-using FoxTwoLabs.Widget.Application.Models;
+﻿using FoxTwoLabs.Widget.Application.Models;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using static Azure.Core.HttpHeader;
-using static System.Net.WebRequestMethods;
+
+
 
 namespace FoxTwoLabs.Widget.Application.Workflows.Queries
 {
@@ -33,30 +26,30 @@ namespace FoxTwoLabs.Widget.Application.Workflows.Queries
     // Query Handler
     public class GetWeatherQueryHandler : IRequestHandler<GetWeatherQuery, WeatherModel>
     {
-        private readonly IMapper _mapper;
-        private string apiKey;
+        private string _apiKey;
+        private string _meto_endpoint;
+        private string _google_maps_endpoint;
 
-        public GetWeatherQueryHandler(IMapper mapper, IConfiguration configuration)
+        public GetWeatherQueryHandler(IConfiguration configuration)
         {
-            _mapper = mapper;
-            apiKey = configuration.GetSection("GOOGLE_API_KEY").Value;
+            _apiKey = configuration.GetSection("GOOGLE_API_KEY").Value;
+            _meto_endpoint = configuration.GetSection("METO_ENDPOINT").Value;
+            _google_maps_endpoint = configuration.GetSection("GOOGLE_MAPS_ENDPOINT").Value;
         }
 
 
        public async Task<WeatherModel> Handle(GetWeatherQuery request, CancellationToken cancellationToken)
         {
 
-            // Note these endpoints typically would go into appsettings, all api keys would be in LaunchSettings/Secret manager
-
             // Get Temperature based upon long,lat...
-            string url = $"https://api.open-meteo.com/v1/forecast?latitude={request.req.Latitude}&longitude={request.req.Longitude}&current_weather=true";
+            string url = $"{_meto_endpoint}&latitude={request.req.Latitude}&longitude={request.req.Longitude}";
             var client = new HttpClient();
             var rawData = await client.GetStringAsync(url);
             dynamic jsonObj = JsonConvert.DeserializeObject<dynamic>(rawData);
             var temp = jsonObj.current_weather.temperature;
 
             // get city
-            url = $"https://maps.googleapis.com/maps/api/geocode/json?latlng={request.req.Latitude},{request.req.Longitude}&key={apiKey}";
+            url = $"{_google_maps_endpoint}latlng={request.req.Latitude},{request.req.Longitude}&key={_apiKey}";
             rawData = await client.GetStringAsync(url);
 
             // For demo, we just know where the pretty address is :)

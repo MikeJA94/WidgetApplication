@@ -7,14 +7,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
 using System.Net.Http;
-using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
-using static Azure.Core.HttpHeader;
-using static System.Net.WebRequestMethods;
+
 
 namespace FoxTwoLabs.Widget.Application.Workflows.Queries
 {
@@ -33,24 +29,22 @@ namespace FoxTwoLabs.Widget.Application.Workflows.Queries
     // Query Handler
     public class GetHeadlinesQueryHandler : IRequestHandler<GetHeadlinesQuery, List<HeadlineModel>>
     {
-        private readonly IMapper _mapper;
-        private string apiKey;
+        private string _apiKey;
+        private string _apiURL;
 
         public GetHeadlinesQueryHandler(IMapper mapper,  IConfiguration configuration)
         {
-            _mapper = mapper;
-            apiKey = configuration.GetSection("GNEWS_API_KEY").Value;
+            _apiKey = configuration.GetSection("GNEWS_API_KEY").Value;
+            _apiURL = configuration.GetSection("GNEWS_ENDPOINT").Value;
         }
 
 
        public async Task<List<HeadlineModel>> Handle(GetHeadlinesQuery request, CancellationToken cancellationToken)
         {
-            // Note these endpoints typically would go into appsettings, all api keys would be in LaunchSettings/Secret manager
             List<HeadlineModel> News = new List<HeadlineModel>();
 
-
             var client = new HttpClient();
-            string url = $" https://gnews.io/api/v4/top-headlines?category=general&apikey={apiKey}&lang=en";
+            string url = $"{_apiURL}{_apiKey}";
             var rawData = await client.GetStringAsync(url);
 
             // use this for testing...
