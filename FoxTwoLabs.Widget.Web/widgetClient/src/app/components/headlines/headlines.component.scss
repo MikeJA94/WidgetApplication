@@ -9,7 +9,7 @@
     overflow: auto;
     overflow-x: hidden;
     .title {
-      color: lightgreen;
+      color: var(--highlight-color);
       font-size: larger;
       display: block;
     }
