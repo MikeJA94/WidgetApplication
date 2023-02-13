@@ -60,7 +60,7 @@ namespace FoxTwoLabs.Widget.Application.Workflows.Queries
             {
                 Location = location,
                 // °F = (°C × 9 / 5) +32
-                Temperature = $"{(temp * 9 / 5) + 32} (F)"  // In Fahrenheit
+                Temperature = $"{((temp * 9 / 5) + 32).ToString("0.00")} (F)"  // In Fahrenheit
             };
              return data;
         }
